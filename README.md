@@ -6,3 +6,7 @@
 git init
 ```
 2. Publish the changes, create a public repository via visual studio
+3. Run the init_setup.sh(Linux terminal Only!!) 
+```
+bash init_Setup.sh
+```
