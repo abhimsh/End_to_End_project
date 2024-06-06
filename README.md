@@ -10,3 +10,16 @@ git init
 ```
 bash init_Setup.sh
 ```
+4. Run the template.py
+```
+python template.py
+```
+5. Install Local package
+```
+python setup.py install
+```
+Or
+add -e . in requirements.txt and run the below command
+```
+pip install -r requirements.txt
+```

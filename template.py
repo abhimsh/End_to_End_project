@@ -23,7 +23,6 @@ list_of_files= [
     f"src/{project_name}/utils/__init__.py",
 ]
 
-cwd = os.getcwd()
 for file in list_of_files:
     # To get system independent path \ or /
     file_path = Path(file)
