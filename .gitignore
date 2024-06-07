@@ -161,5 +161,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-#remove the data directory containing the datasets
+# remove the data directory containing the datasets
 data/
+
+# Ignore the artifacts folders since it not needed
+artifacts/
