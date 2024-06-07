@@ -18,7 +18,7 @@ class DataTransformerConfig:
 
 class DataTransformation:
     def __init__(self) -> None:
-        self.data_transformer_config = DataTransformation()
+        self.data_transformer_config = DataTransformerConfig()
 
     def get_transformed_data(self):
         try:
@@ -28,6 +28,13 @@ class DataTransformation:
             numerical_features = ['carat', 'depth', 'table', 'x', 'y', 'z']
             categorical_features = ['cut', 'color', 'clarity']
 
+            order_categories = [
+                ["Fair", "Good", "Very Good", "Premium" , "Ideal"],
+                ["D", "E", "F", "G", "H", "I", "J"], 
+                ["I1", "SI2", "SI1", "VS2", "VS1", "VVS2", "VVS1", "IF"]
+                ]
+
+            
             # Order of direct categorical_columns
             cut_categories = ["Fair", "Good", "Very Good", "Premium" , "Ideal"],
             color_categories = ["D", "E", "F", "G", "H", "I", "J"], 
@@ -44,13 +51,7 @@ class DataTransformation:
             categorical_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("ordinal", OrdinalEncoder(categories=[
-                        cut_categories,
-                        color_categories,
-                        clarity_categories
-                        ]
-                        )
-                        ),
+                    ("ordinal", OrdinalEncoder(categories=order_categories)),
                     ("standard", StandardScaler())
                 ]
             )
@@ -73,9 +74,13 @@ class DataTransformation:
             logging.info("About to start the Data Transformation process")
             train_data = pd.read_csv(train_data_path)
             test_data = pd.read_csv(test_data_path)
+            
+            logging.debug("Reading the training and test data")
+            logging.debug("\n" + train_data.head().to_string())
+            logging.debug("\n" + test_data.head().to_string())
 
             preprocessor_obj = self.get_transformed_data()
-            logging.info("preprocessing obj created successfully")
+            logging.info("preprocessing obj received successfully")
             
             target_feature = "price"
             features_to_be_dropped = [target_feature, "id"]
@@ -83,7 +88,10 @@ class DataTransformation:
             # Drop the target colummn and ID columns as its not required
             train_features_data = train_data.drop(columns=features_to_be_dropped, axis=1)
             test_features_data = test_data.drop(columns=features_to_be_dropped, axis=1)
-            logging.info("preprocessing obj created successfully")
+            
+            logging.debug("After removal of ID and PRICE columns the data")
+            logging.debug("\n" + train_features_data.head().to_string())
+            logging.debug("\n" + test_features_data.head().to_string())
             
             # Get target columns for train and test data
             target_train_feature_data = train_data[target_feature]

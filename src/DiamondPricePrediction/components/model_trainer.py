@@ -29,12 +29,13 @@ class ModelTrainer:
                 test_arr[:, -1]
             )
             # List of all models to train and check
-            models = OrderedDict()
-            models["LinearRegression"] =  LinearRegression(),
-            models["Lasso"] = Lasso()
-            models["Ridge"] = Ridge()
-            models["ElasticNet"] = ElasticNet()
-
+            models={
+                'LinearRegression':LinearRegression(),
+                'Lasso':Lasso(),
+                'Ridge':Ridge(),
+                'Elasticnet':ElasticNet()
+                }
+            
             all_model_report = evaluate_all_models(X_train, X_test, y_train, y_test, models)
             logging.info("All model training completed")
 
@@ -65,7 +66,7 @@ class ModelTrainer:
                  obj=models[best_model_name]
                  )
             logging.info("best mode obj pickled successfully")
-            
+
             logging.info("Model training Step completed successfully")
         except Exception as error:
                 logging.exception(f"Error encountered while performing Model training, Error: {error}")

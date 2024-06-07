@@ -23,7 +23,7 @@ class DataIngestion:
         logging.info("Data Ingestion in progress")
         try:
             # Create Artificatory Folder
-            os.makedirs(os.path.dirname(self.config.raw_data_path))
+            os.makedirs(os.path.dirname(self.config.raw_data_path), exist_ok=True)
 
             # Read the data from the csv file
             data = pd.read_csv(path_of_data)
