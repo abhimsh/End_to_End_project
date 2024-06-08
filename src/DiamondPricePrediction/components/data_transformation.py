@@ -11,6 +11,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from dataclasses import dataclass
 
+
 @dataclass
 class DataTransformerConfig:
     preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
@@ -27,17 +28,10 @@ class DataTransformation:
             # Names of categorical and Numerical columns in data frame
             numerical_features = ['carat', 'depth', 'table', 'x', 'y', 'z']
             categorical_features = ['cut', 'color', 'clarity']
-
-            order_categories = [
-                ["Fair", "Good", "Very Good", "Premium" , "Ideal"],
-                ["D", "E", "F", "G", "H", "I", "J"], 
-                ["I1", "SI2", "SI1", "VS2", "VS1", "VVS2", "VVS1", "IF"]
-                ]
-
             
             # Order of direct categorical_columns
-            cut_categories = ["Fair", "Good", "Very Good", "Premium" , "Ideal"],
-            color_categories = ["D", "E", "F", "G", "H", "I", "J"], 
+            cut_categories = ["Fair", "Good", "Very Good", "Premium" , "Ideal"]
+            color_categories = ["D", "E", "F", "G", "H", "I", "J"]
             clarity_categories = ["I1", "SI2", "SI1", "VS2", "VS1", "VVS2", "VVS1", "IF"]
 
             numerical_pipeline = Pipeline(
@@ -51,7 +45,7 @@ class DataTransformation:
             categorical_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("ordinal", OrdinalEncoder(categories=order_categories)),
+                    ("ordinal", OrdinalEncoder(categories=[cut_categories, color_categories, clarity_categories])),
                     ("standard", StandardScaler())
                 ]
             )
@@ -69,6 +63,7 @@ class DataTransformation:
             logging.exception(f"Error encountered while creatinmg pipelin for Data Transformation, Error: {error}")
             raise CustomException(f"Error in Data Transformation, Error: {error}")
         
+    
     def initialize_data_transformation(self, train_data_path, test_data_path):
         try:
             logging.info("About to start the Data Transformation process")
