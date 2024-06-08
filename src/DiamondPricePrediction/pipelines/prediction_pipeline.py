@@ -19,7 +19,7 @@ class PredictPipeline:
             logging.info("Loaded the preprocessor obj and model obj from pickle files")
 
             # Perform preprocessing of the data
-            processed_data = preprocessor_obj(all_features)
+            processed_data = preprocessor_obj.transform(all_features)
             logging.debug("Processed data : {}".format(processed_data))
 
             # Perform Prediction on the received data
