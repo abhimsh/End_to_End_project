@@ -14,7 +14,7 @@ def save_object(file_path, obj):
         raise CustomException(f"Error in Data Write to pickle file, Error: {error}")
         
 
-def laod_object(file_path):
+def load_object(file_path):
     try:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"{file_path} Not Found!!")
